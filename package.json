@@ -1,0 +1,36 @@
+{
+  "name": "@growtheffect/sdk-tracker",
+  "version": "1.0.0",
+  "description": "GrowthEffect Tracker SDK for landing pages and forms",
+  "type": "module",
+  "main": "dist/ge-tracker.min.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup -c && npm run build:types",
+    "build:types": "tsc --declaration --emitDeclarationOnly --outDir dist",
+    "dev": "rollup -c -w",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "growtheffect",
+    "lead-capture",
+    "form-tracking",
+    "analytics",
+    "sdk",
+    "utm-tracking"
+  ],
+  "author": "GrowthEffect",
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.8",
+    "@rollup/plugin-node-resolve": "^15.3.1",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "rollup": "^4.13.0",
+    "tslib": "^2.8.1",
+    "typescript": "^5.5.2"
+  }
+}
