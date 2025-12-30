@@ -79,30 +79,28 @@ export class GECaptureClient {
 
       form.setAttribute('data-ge-capture', 'true');
 
-      form.addEventListener('submit', async (event) => {
+      form.addEventListener('submit', () => {
         this.log(`Form ${index} submitted`);
 
         try {
           const extractedData = this.extractFormData(form);
 
           if (extractedData && extractedData.leadData.email) {
-            event.preventDefault();
+            this.log('Capturing lead data in parallel with form submission...');
 
-            this.log('Capturing lead data before form submission...');
+            // Capture the lead data asynchronously without blocking the form submission
+            this.capture(extractedData.leadData, extractedData.rawFormFields)
+              .then((result) => {
+                if (result.success) {
+                  this.log('Lead captured successfully');
+                } else {
+                  this.log('Lead capture failed:', result.error);
+                }
+              })
+              .catch((error) => {
+                this.log('Error capturing lead:', error);
+              });
 
-            const result = await this.capture(extractedData.leadData, extractedData.rawFormFields);
-
-            if (result.success) {
-              this.log('Lead captured successfully, allowing form to submit');
-              if (form.action && form.action !== window.location.href) {
-                form.submit();
-              }
-            } else {
-              this.log('Lead capture failed:', result.error);
-              if (form.action && form.action !== window.location.href) {
-                form.submit();
-              }
-            }
           } else {
             this.log('Form does not contain email field, skipping capture');
           }
