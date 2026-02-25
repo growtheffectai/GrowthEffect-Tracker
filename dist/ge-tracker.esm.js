@@ -328,7 +328,8 @@ class GECaptureClient {
                 'loginemail', 'account_email', 'account-email', 'accountemail', 'newsletter_email',
                 'newsletter-email', 'newsletteremail', 'form_email', 'form-email', 'formemail',
                 'input_email', 'input-email', 'inputemail', 'field_email', 'field-email', 'fieldemail',
-                'em', 'eml', 'correo', 'correo_electronico', 'courriel', 'e_mail'
+                'em', 'eml', 'correo', 'correo_electronico', 'courriel', 'e_mail',
+                'femail', 'f_email', 'f-email'
             ],
             name: [
                 'name', 'fullname', 'full_name', 'username', 'user_name', 'firstname', 'first_name',
@@ -368,7 +369,8 @@ class GECaptureClient {
                 'secondary_phone', 'secondary-phone', 'secondaryphone', 'billing_phone', 'billing-phone',
                 'billingphone', 'shipping_phone', 'shipping-phone', 'shippingphone', 'customer_phone',
                 'customer-phone', 'customerphone', 'client_phone', 'client-phone', 'clientphone',
-                'user_phone', 'user-phone', 'userphone', 'member_phone', 'member-phone', 'memberphone'
+                'user_phone', 'user-phone', 'userphone', 'member_phone', 'member-phone', 'memberphone',
+                'fphone', 'f_phone', 'f-phone'
             ],
             company: [
                 'company', 'organization', 'business', 'companyname', 'company_name',
