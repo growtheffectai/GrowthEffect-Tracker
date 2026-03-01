@@ -5,7 +5,7 @@ export interface GECaptureConfig {
     debug?: boolean;
 }
 export interface LeadData {
-    email: string;
+    email?: string;
     name?: string;
     phone?: string;
     company?: string;

@@ -85,25 +85,20 @@ export class GECaptureClient {
         try {
           const extractedData = this.extractFormData(form);
 
-          if (extractedData && extractedData.leadData.email) {
-            this.log('Capturing lead data in parallel with form submission...');
+          this.log('Capturing lead data in parallel with form submission...');
 
-            // Capture the lead data asynchronously without blocking the form submission
-            this.capture(extractedData.leadData, extractedData.rawFormFields)
-              .then((result) => {
-                if (result.success) {
-                  this.log('Lead captured successfully');
-                } else {
-                  this.log('Lead capture failed:', result.error);
-                }
-              })
-              .catch((error) => {
-                this.log('Error capturing lead:', error);
-              });
-
-          } else {
-            this.log('Form does not contain email field, skipping capture');
-          }
+          // Capture the lead data asynchronously without blocking the form submission
+          this.capture(extractedData.leadData, extractedData.rawFormFields)
+            .then((result) => {
+              if (result.success) {
+                this.log('Lead captured successfully');
+              } else {
+                this.log('Lead capture failed:', result.error);
+              }
+            })
+            .catch((error) => {
+              this.log('Error capturing lead:', error);
+            });
         } catch (error) {
           this.log('Error processing form:', error);
         }
@@ -139,10 +134,9 @@ export class GECaptureClient {
     });
   }
 
-  private extractFormData(form: HTMLFormElement): { leadData: LeadData; rawFormFields: Record<string, any> } | null {
+  private extractFormData(form: HTMLFormElement): { leadData: LeadData; rawFormFields: Record<string, any> } {
     const formData = new FormData(form);
     const data: LeadData = {
-      email: '',
       custom: {}
     };
 
@@ -259,7 +253,7 @@ export class GECaptureClient {
       }
     });
 
-    return data.email ? { leadData: data, rawFormFields } : null;
+    return { leadData: data, rawFormFields };
   }
 
   private buildAttributionData(): AttributionData {
@@ -284,10 +278,6 @@ export class GECaptureClient {
   public async capture(leadData: LeadData, rawFormFields?: Record<string, any>): Promise<CaptureResponse> {
     if (!this.initialized) {
       throw new Error('[GETracker] Must call init() before capture()');
-    }
-
-    if (!leadData.email) {
-      throw new Error('[GETracker] Email is required for lead tracking');
     }
 
     const attributionData = this.buildAttributionData();

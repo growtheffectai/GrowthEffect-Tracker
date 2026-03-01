@@ -1,6 +1,6 @@
 {
   "name": "@growtheffect/sdk-tracker",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "GrowthEffect Tracker SDK for landing pages and forms",
   "type": "module",
   "main": "dist/ge-tracker.min.js",

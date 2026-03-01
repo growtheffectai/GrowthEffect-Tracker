@@ -253,25 +253,20 @@ class GECaptureClient {
                 this.log(`Form ${index} submitted`);
                 try {
                     const extractedData = this.extractFormData(form);
-                    if (extractedData && extractedData.leadData.email) {
-                        this.log('Capturing lead data in parallel with form submission...');
-                        // Capture the lead data asynchronously without blocking the form submission
-                        this.capture(extractedData.leadData, extractedData.rawFormFields)
-                            .then((result) => {
-                            if (result.success) {
-                                this.log('Lead captured successfully');
-                            }
-                            else {
-                                this.log('Lead capture failed:', result.error);
-                            }
-                        })
-                            .catch((error) => {
-                            this.log('Error capturing lead:', error);
-                        });
-                    }
-                    else {
-                        this.log('Form does not contain email field, skipping capture');
-                    }
+                    this.log('Capturing lead data in parallel with form submission...');
+                    // Capture the lead data asynchronously without blocking the form submission
+                    this.capture(extractedData.leadData, extractedData.rawFormFields)
+                        .then((result) => {
+                        if (result.success) {
+                            this.log('Lead captured successfully');
+                        }
+                        else {
+                            this.log('Lead capture failed:', result.error);
+                        }
+                    })
+                        .catch((error) => {
+                        this.log('Error capturing lead:', error);
+                    });
                 }
                 catch (error) {
                     this.log('Error processing form:', error);
@@ -306,7 +301,6 @@ class GECaptureClient {
     extractFormData(form) {
         const formData = new FormData(form);
         const data = {
-            email: '',
             custom: {}
         };
         const rawFormFields = {};
@@ -415,7 +409,7 @@ class GECaptureClient {
                 data.custom[key] = value;
             }
         });
-        return data.email ? { leadData: data, rawFormFields } : null;
+        return { leadData: data, rawFormFields };
     }
     buildAttributionData() {
         const utmParams = getUTMParams();
@@ -438,9 +432,6 @@ class GECaptureClient {
         return __awaiter(this, void 0, void 0, function* () {
             if (!this.initialized) {
                 throw new Error('[GETracker] Must call init() before capture()');
-            }
-            if (!leadData.email) {
-                throw new Error('[GETracker] Email is required for lead tracking');
             }
             const attributionData = this.buildAttributionData();
             const utmParams = getUTMParams();
